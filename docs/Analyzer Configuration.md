@@ -65,16 +65,16 @@ Configurable Rules:
 [CA1027](https://docs.microsoft.com/visualstudio/code-quality/ca1027),
 [CA1028](https://docs.microsoft.com/visualstudio/code-quality/ca1028),
 [CA1030](https://docs.microsoft.com/visualstudio/code-quality/ca1030),
-[CA1036](https://docs.microsoft.com/visualstudio/code-quality/ca1036), 
+[CA1036](https://docs.microsoft.com/visualstudio/code-quality/ca1036),
 [CA1040](https://docs.microsoft.com/visualstudio/code-quality/ca1040),
-[CA1041](https://docs.microsoft.com/visualstudio/code-quality/ca1041), 
+[CA1041](https://docs.microsoft.com/visualstudio/code-quality/ca1041),
 [CA1043](https://docs.microsoft.com/visualstudio/code-quality/ca1043),
-[CA1044](https://docs.microsoft.com/visualstudio/code-quality/ca1044), 
+[CA1044](https://docs.microsoft.com/visualstudio/code-quality/ca1044),
 [CA1045](https://docs.microsoft.com/visualstudio/code-quality/ca1045),
 [CA1047](https://docs.microsoft.com/visualstudio/code-quality/ca1047),
 [CA1051](https://docs.microsoft.com/visualstudio/code-quality/ca1051),
 [CA1052](https://docs.microsoft.com/visualstudio/code-quality/ca1052),
-[CA1054](https://docs.microsoft.com/visualstudio/code-quality/ca1054), 
+[CA1054](https://docs.microsoft.com/visualstudio/code-quality/ca1054),
 [CA1055](https://docs.microsoft.com/visualstudio/code-quality/ca1055),
 [CA1056](https://docs.microsoft.com/visualstudio/code-quality/ca1056),
 [CA1058](https://docs.microsoft.com/visualstudio/code-quality/ca1058),
@@ -238,6 +238,19 @@ Examples:
 |`dotnet_code_quality.additional_string_formatting_methods = MyFormat1\|MyFormat2` | Matches all methods named either 'MyFormat1' or 'MyFormat2' in the compilation
 |`dotnet_code_quality.additional_string_formatting_methods = NS.MyType.MyFormat(ParamType)` | Matches specific method 'MyFormat' with given fully qualified signature
 |`dotnet_code_quality.additional_string_formatting_methods = NS1.MyType1.MyFormat1(ParamType)\|NS2.MyType2.MyFormat2(ParamType)` | Matches specific methods 'MyFormat1' and 'MyFormat2' with respective fully qualified signature
+
+Option Name: `try_determine_additional_string_formatting_methods_automatically`
+
+Boolean option to enable heuristically detecting of additional string formatting methods
+A method is considered a string formatting method if it has a 'string format' parameter followed by a 'params object[]' parameter.
+
+Configurable Rules: [CA2241](https://docs.microsoft.com/visualstudio/code-quality/ca2241)
+
+Option Values: Boolean values
+
+Default Value: `false`
+
+Example: `dotnet_code_quality.try_determine_additional_string_formatting_methods_automatically = true`
 
 ### Excluded symbol names
 
@@ -510,6 +523,23 @@ class Test
 }
 ```
 
+#### Points to analysis kind for DFA rules based on PointsToAnalysis
+Option Name: `points_to_analysis_kind`
+
+Configurable Rules: All DFA rules
+
+Option Values:
+
+| Option Value | Summary |
+| --- | --- |
+| `None` | PointsToAnalysis is disabled. |
+| `PartialWithoutTrackingFieldsAndProperties` | Partial analysis that does not track PointsToData for fields and properties for improved performance. |
+| `Complete` | Complete analysis that also tracks PointsToData for fields and properties. |
+
+Default Value: Depends on each rule.
+
+Example: `dotnet_code_quality.points_to_analysis_kind = Complete`
+
 #### Configure execution of Copy analysis (tracks value and reference copies)
 
 Option Name: `copy_analysis`
@@ -693,3 +723,12 @@ Examples:
 |`dotnet_code_quality.CA1806.additional_use_results_methods = MyMethod1\|MyMethod2` | Matches all methods named either 'MyMethod1' or 'MyMethod2' in the compilation
 |`dotnet_code_quality.CA1806.additional_use_results_methods = M:NS.MyType.MyMethod(ParamType)` | Matches specific method 'MyMethod' with given fully qualified signature
 |`dotnet_code_quality.CA1806.additional_use_results_methods = M:NS1.MyType1.MyMethod1(ParamType)\|M:NS2.MyType2.MyMethod2(ParamType)` | Matches specific methods 'MyMethod1' and 'MyMethod2' with respective fully qualified signature
+
+### Allowed suffixes
+Option Name: `allowed_suffixes`
+
+Configurable Rules: [CA1711](https://docs.microsoft.com/visualstudio/code-quality/ca1711)
+
+Option Values: List (separated by '|') of allowed suffixes
+
+Example: `dotnet_code_quality.CA1711.allowed_suffixes = Flag|Flags`
